@@ -12,6 +12,8 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+    class Meta:
+        verbose_name_plural = 'categories'
 
 
 
@@ -25,6 +27,7 @@ class Post(models.Model):
     attached_file = models.FileField(upload_to='blog/files/%Y/%m/%d/', blank=True)
 
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey(Category, blank=True, null=True, on_delete=models.SET_NULL)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
