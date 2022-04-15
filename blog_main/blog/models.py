@@ -4,6 +4,7 @@ from turtle import mode
 from django.contrib.auth.models import User
 from django.db import models
 
+
 # Create your models here.
 
 
@@ -28,11 +29,8 @@ class Category(models.Model):
     def get_absolute_url(self):
         return f'/blog/category/{self.slug}'
 
-
     class Meta:
         verbose_name_plural = 'categories'
-
-
 
 
 class Post(models.Model):
@@ -44,14 +42,14 @@ class Post(models.Model):
     head_image = models.ImageField(upload_to='blog/images/%Y/%m/%d/', blank=True)
     attached_file = models.FileField(upload_to='blog/files/%Y/%m/%d/', blank=True)
 
-    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, blank=True, null=True, on_delete=models.SET_NULL)
     tags = models.ManyToManyField(Tag, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    #methods
+    # methods
     def __str__(self):
         return f'[{self.pk}]  [{self.title}] :: {self.author}'
 
