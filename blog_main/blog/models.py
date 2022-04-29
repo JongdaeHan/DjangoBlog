@@ -6,6 +6,8 @@ from django.db import models
 
 
 # Create your models here.
+from markdown import markdown
+from markdownx.models import MarkdownxField
 
 
 class Tag(models.Model):
@@ -35,7 +37,8 @@ class Category(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=30)
-    content = models.TextField()
+    content = MarkdownxField()
+
 
     hook_msg = models.TextField(blank=True)
 
@@ -58,3 +61,6 @@ class Post(models.Model):
 
     def get_file_name(self):
         return os.path.basename(self.attached_file.name)
+
+    def get_markdown_content(self):
+        return markdown(self.content)
