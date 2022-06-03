@@ -41,7 +41,13 @@ INSTALLED_APPS = [
     'blog',
     'single_pages',
     'crispy_forms',
-    'markdownx'
+    'markdownx',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    #provider
+    'allauth.socialaccount.providers.google',
 
 
 ]
@@ -134,9 +140,20 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend'
+)
+
+SITE_ID = 1
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+LOGIN_REDIRECT_URL = '/blog/'
 
 # User media files
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '_media')
+# MEDIA_ROOT = '/var/vcap/media'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
